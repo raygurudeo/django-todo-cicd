@@ -15,6 +15,6 @@ pipeline {
             steps {
                 echo "Application deployed"
             }
-        })
+        }
     }
 }
