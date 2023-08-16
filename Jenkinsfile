@@ -11,7 +11,7 @@ pipeline {
                 echo "Code Built and tested"
             }
         }
-        stage("Deploy" {
+        stage("Deploy") {
             steps {
                 echo "Application deployed"
             }
