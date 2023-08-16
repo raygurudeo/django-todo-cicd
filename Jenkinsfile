@@ -8,13 +8,13 @@ pipeline {
         }
         stage("Build And Test") {
             steps {
-                docker build . -t web
+                sh 'docker build . -t web'
                 echo "Code Built and tested"
             }
         }
         stage("Deploy") {
             steps {
-                docker-compose up -d
+                sh 'docker-compose up -d'
                 echo "Application deployed"
             }
         }
