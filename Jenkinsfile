@@ -8,14 +8,18 @@ pipeline {
         }
         stage("Build And Test") {
             steps {
-                sh 'docker build . -t web'
+                sh 'docker build . -t django-todo-cicd'
                 echo "Code Built and tested"
             }
         }
-        stage("Deploy") {
+        stage("Push To Dockerhub") {
             steps {
-                sh 'docker-compose up -d'
-                echo "Application deployed"
+                withCredentials([usernamePassword(credentialsId:"dockerhub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
+                    sh "docker tag django-todo-cicd ${env.dockerHubUser}/django-todo-cicd"
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                    sh "docker push ${env.dockerHubUser}/django-todo-cicd:latest"
+                    echo "Image pushed to Dockerhub"
+                }
             }
         }
     }
